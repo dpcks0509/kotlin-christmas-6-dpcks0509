@@ -1,14 +1,12 @@
 package christmas.view
 
 import camp.nextstep.edu.missionutils.Console
-import christmas.util.Validator.validateVisitDayFormat
-import christmas.util.Validator.validateVisitDayRange
+import christmas.model.Menu
+import christmas.util.Validator.validateVisitDay
 
 class InputView {
     fun inputVisitDay(): Int {
         val visitDay = Console.readLine()
-        validateVisitDayFormat(visitDay)
-        validateVisitDayRange(visitDay)
-        return visitDay.toInt()
+        return validateVisitDay(visitDay)
     }
 }
