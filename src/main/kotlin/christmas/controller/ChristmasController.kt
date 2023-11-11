@@ -11,7 +11,7 @@ class ChristmasController {
     fun run() {
         val visitDay = getInputWithValidation { getVisitDay() }
         val orders = getInputWithValidation { getOrders() }
-        getBenefitPreview()
+        getBenefitPreview(orders)
     }
 
     fun <T> getInputWithValidation(inputFunction: () -> T): T {
@@ -33,7 +33,8 @@ class ChristmasController {
         return inputView.inputOrders()
     }
 
-    private fun getBenefitPreview() {
+    private fun getBenefitPreview(orders: List<Order>) {
         outputView.printBenefitPreviewInstruction()
+        outputView.printOrders(orders)
     }
 }

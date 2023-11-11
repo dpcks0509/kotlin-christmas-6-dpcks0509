@@ -1,5 +1,6 @@
 package christmas.view
 
+import christmas.model.Order
 import christmas.util.OutputMessage
 
 class OutputView {
@@ -16,6 +17,11 @@ class OutputView {
     }
 
     fun printBenefitPreviewInstruction() {
-        println(OutputMessage.BENEFIT_PREVIEW_INSTRUCTION.getMessage())
+        println(OutputMessage.BENEFIT_PREVIEW_HEADER.getMessage())
+    }
+
+    fun printOrders(orders: List<Order>) {
+        println(OutputMessage.ORDERS_HEADER.getMessage())
+        orders.forEach { order -> println(order) }
     }
 }
