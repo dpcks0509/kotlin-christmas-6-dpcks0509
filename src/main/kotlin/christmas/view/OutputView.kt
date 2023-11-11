@@ -14,4 +14,8 @@ class OutputView {
     fun printOrderMenusInstruction() {
         println(OutputMessage.ORDER_MENUS_INSTRUCTION.getMessage())
     }
+
+    fun printBenefitPreviewInstruction() {
+        println(OutputMessage.BENEFIT_PREVIEW_INSTRUCTION.getMessage())
+    }
 }
