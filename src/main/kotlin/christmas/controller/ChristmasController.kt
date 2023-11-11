@@ -1,6 +1,6 @@
 package christmas.controller
 
-import christmas.model.Menu
+import christmas.model.Benefit
 import christmas.model.Order
 import christmas.view.InputView
 import christmas.view.OutputView
@@ -15,6 +15,9 @@ class ChristmasController {
         getBenefitPreview(visitDay, orders)
         val totalOrderAmountBeforeDiscount = calculateTotalOrderAmountBeforeDiscount(orders)
         getTotalOrderAmountBeforeDiscount(totalOrderAmountBeforeDiscount)
+        val benefit = Benefit(visitDay, orders)
+        getGiftMenu(benefit.getGift())
+        getBenefitDetails(benefit)
     }
 
     private fun <T> getInputWithValidation(inputFunction: () -> T): T {
@@ -46,6 +49,23 @@ class ChristmasController {
     }
 
     private fun calculateTotalOrderAmountBeforeDiscount(orders: List<Order>): Int {
-        return orders.sumOf { order -> order.calculateOrderAmount(order) }
+        return orders.sumOf { order -> order.getOrderAmount() }
+    }
+
+    private fun getGiftMenu(gift: String) {
+        outputView.printGiftMenu(gift)
+    }
+
+    private fun getBenefitDetails(benefit: Benefit) {
+        outputView.printBenefitDetailsHeader()
+        if (benefit.getTotalBenefitAmount() != 0) {
+            outputView.printDDayDiscount(benefit.getDDayDiscount())
+            outputView.printWeekendDayDiscount(benefit.getWeekendDayDiscount())
+            outputView.printWeekDayDiscount(benefit.getWeekDayDiscount())
+            outputView.printSpecialDayDiscount(benefit.getSpecialDayDiscount())
+            outputView.printGiftBenefit(benefit.getGiftBenefit())
+        } else {
+            outputView.printNoBenefit()
+        }
     }
 }
