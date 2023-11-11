@@ -1,6 +1,5 @@
 package christmas.view
 
-import christmas.model.Benefit
 import christmas.model.Order
 import christmas.util.OutputMessage
 import java.text.DecimalFormat
@@ -22,8 +21,8 @@ class OutputView {
         println(OutputMessage.ORDER_MENUS_INSTRUCTION.getMessage())
     }
 
-    fun printBenefitPreviewInstruction(visitDay: Int) {
-        println(OutputMessage.BENEFIT_PREVIEW_INSTUCTION.getMessage().format(visitDay))
+    fun printBenefitPreviewHeader(visitDay: Int) {
+        println(OutputMessage.BENEFIT_PREVIEW_HEADER.getMessage().format(visitDay))
     }
 
     fun printOrders(orders: List<Order>) {
@@ -31,9 +30,9 @@ class OutputView {
         orders.forEach { order -> println(order) }
     }
 
-    fun printTotalOrderAmountBeforeDiscount(totalOrderAmount: Int) {
+    fun printTotalOrderAmountBeforeDiscount(totalOrderAmountBeforeDiscount: Int) {
         println(OutputMessage.TOTAL_ORDER_AMOUNT_BEFORE_DISCOUNT_HEADER.getMessage())
-        println("${decimalFormat.format(totalOrderAmount)}원")
+        println("${decimalFormat.format(totalOrderAmountBeforeDiscount)}원")
     }
 
     fun printGiftMenu(gift: String) {
@@ -74,11 +73,13 @@ class OutputView {
         println(OutputMessage.NO_BENEFIT.getMessage())
     }
 
-    fun printTotalBenefitAmountHeader() {
+    fun printTotalBenefitAmount(totalBenefitAmount: Int) {
         println(OutputMessage.TOTAL_BENEFIT_AMOUNT_HEADER.getMessage())
+        println("-${decimalFormat.format(totalBenefitAmount)}원")
     }
 
-    fun printTotalBenefitAmount(totalBenefitAmount: Int) {
-        println("-${decimalFormat.format(totalBenefitAmount)}원")
+    fun printTotalOrderAmountAfterDiscount(totalOrderAmountAfterDiscount: Int) {
+        println(OutputMessage.TOTAL_ORDER_AMOUNT_AFTER_DISCOUNT_HEADER.getMessage())
+        println("${decimalFormat.format(totalOrderAmountAfterDiscount)}원")
     }
 }

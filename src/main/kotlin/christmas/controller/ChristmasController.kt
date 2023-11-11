@@ -13,11 +13,14 @@ class ChristmasController {
         val visitDay = getInputWithValidation { getVisitDay() }
         val orders = getInputWithValidation { getOrders() }
         getBenefitPreview(visitDay, orders)
-        getTotalOrderAmountBeforeDiscount(calculateTotalOrderAmountBeforeDiscount(orders))
+        val totalOrderAmountBeforeDiscount = calculateTotalOrderAmountBeforeDiscount(orders)
+        getTotalOrderAmountBeforeDiscount(totalOrderAmountBeforeDiscount)
         val benefit = Benefit(visitDay, orders)
         getGiftMenu(benefit.getGift())
         getBenefitDetails(benefit)
-        getTotalBenefitAmount(benefit.getTotalBenefitAmount())
+        val totalBenefitAmount = benefit.getTotalBenefitAmount()
+        getTotalBenefitAmount(totalBenefitAmount)
+        getTotalOrderAmountAfterDiscount(calculateTotalOrderAmountAfterDiscount(totalOrderAmountBeforeDiscount, totalBenefitAmount))
     }
 
     private fun <T> getInputWithValidation(inputFunction: () -> T): T {
@@ -40,7 +43,7 @@ class ChristmasController {
     }
 
     private fun getBenefitPreview(visitDay: Int, orders: List<Order>) {
-        outputView.printBenefitPreviewInstruction(visitDay)
+        outputView.printBenefitPreviewHeader(visitDay)
         outputView.printOrders(orders)
     }
 
@@ -70,7 +73,14 @@ class ChristmasController {
     }
 
     private fun getTotalBenefitAmount(totalBenefitAmount: Int) {
-        outputView.printTotalBenefitAmountHeader()
         outputView.printTotalBenefitAmount(totalBenefitAmount)
+    }
+
+    private fun getTotalOrderAmountAfterDiscount(totalOrderAmountAfterDiscount: Int) {
+        outputView.printTotalOrderAmountAfterDiscount(totalOrderAmountAfterDiscount)
+    }
+
+    private fun calculateTotalOrderAmountAfterDiscount(totalOrderAmountBeforeDiscount: Int, totalBenefitAmount: Int): Int {
+        return totalOrderAmountBeforeDiscount - totalBenefitAmount
     }
 }
