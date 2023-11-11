@@ -75,7 +75,12 @@ class OutputView {
 
     fun printTotalBenefitAmount(totalBenefitAmount: Int) {
         println(OutputMessage.TOTAL_BENEFIT_AMOUNT_HEADER.getMessage())
-        println("-${decimalFormat.format(totalBenefitAmount)}원")
+        if(totalBenefitAmount != 0) {
+            println(OutputMessage.NEGATIVE_AMOUNT.getMessage().format(decimalFormat.format(totalBenefitAmount)))
+        } else {
+            println(OutputMessage.POSITIVE_AMOUNT.getMessage().format(decimalFormat.format(totalBenefitAmount)))
+        }
+
     }
 
     fun printTotalOrderAmountAfterDiscount(totalOrderAmountAfterDiscount: Int) {

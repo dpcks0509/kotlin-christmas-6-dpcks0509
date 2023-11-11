@@ -18,8 +18,9 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
     private val weekendDays = listOf(1, 2, 8, 9, 15, 16, 22, 23, 29, 30)
     private val specialDays = listOf(3, 10, 17, 24, 25, 31)
 
-    private var totalOrderAmount = 0
+    private var totalOrderAmountBeforeDiscount = 0
     private var totalBenefitAmount = 0
+    private var totalOrderAmountAfterDiscount = 0
 
     private var dDayDiscount = 0
     private var weekendDayDiscount = 0
@@ -31,19 +32,24 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
     private var badge = OutputMessage.NO_BENEFIT.getMessage()
 
     init {
-        totalOrderAmount = initializeTotalOrderAmount()
-        if (totalOrderAmount >= MINIMUM_BENEFIT_AMOUNT) {
+        initializeTotalOrderAmountBeforeDiscount()
+        if (totalOrderAmountBeforeDiscount >= MINIMUM_BENEFIT_AMOUNT) {
             initializeDiscounts()
-            if (totalOrderAmount >= MINIMUM_GIFT_AMOUNT) {
+            if (totalOrderAmountBeforeDiscount >= MINIMUM_GIFT_AMOUNT) {
                 initializeGift()
             }
             initializeTotalBenefitAmount()
+            initializeTotalOrderAmountAfterDiscount()
             initializeBadge()
         }
     }
 
-    private fun initializeTotalOrderAmount(): Int {
-        return orders.sumOf { order -> order.getOrderAmount() }
+    private fun initializeTotalOrderAmountBeforeDiscount() {
+        totalOrderAmountBeforeDiscount = orders.sumOf { order -> order.getOrderAmount() }
+    }
+
+    private fun initializeTotalOrderAmountAfterDiscount() {
+        totalOrderAmountAfterDiscount = totalOrderAmountBeforeDiscount - totalBenefitAmount + giftBenefit
     }
 
     private fun initializeDiscounts() {
@@ -117,6 +123,10 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
     private fun initializeTotalBenefitAmount() {
         totalBenefitAmount = dDayDiscount + weekendDayDiscount + weekDayDiscount + specialDayDiscount + giftBenefit
     }
+
+    fun getTotalOrderAmountBeforeDiscount(): Int = totalOrderAmountBeforeDiscount
+
+    fun getTotalOrderAmountAfterDiscount(): Int = totalOrderAmountAfterDiscount
 
     fun getTotalBenefitAmount(): Int = totalBenefitAmount
 
