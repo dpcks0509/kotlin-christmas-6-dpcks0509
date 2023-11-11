@@ -1,5 +1,6 @@
 package christmas.controller
 
+import christmas.model.Menu
 import christmas.model.Order
 import christmas.view.InputView
 import christmas.view.OutputView
@@ -11,10 +12,12 @@ class ChristmasController {
     fun run() {
         val visitDay = getInputWithValidation { getVisitDay() }
         val orders = getInputWithValidation { getOrders() }
-        getBenefitPreview(orders)
+        getBenefitPreview(visitDay, orders)
+        val totalOrderAmountBeforeDiscount = calculateTotalOrderAmountBeforeDiscount(orders)
+        getTotalOrderAmountBeforeDiscount(totalOrderAmountBeforeDiscount)
     }
 
-    fun <T> getInputWithValidation(inputFunction: () -> T): T {
+    private fun <T> getInputWithValidation(inputFunction: () -> T): T {
         return try {
             inputFunction()
         } catch (illegalArgumentException: IllegalArgumentException) {
@@ -33,8 +36,16 @@ class ChristmasController {
         return inputView.inputOrders()
     }
 
-    private fun getBenefitPreview(orders: List<Order>) {
-        outputView.printBenefitPreviewInstruction()
+    private fun getBenefitPreview(visitDay: Int, orders: List<Order>) {
+        outputView.printBenefitPreviewInstruction(visitDay)
         outputView.printOrders(orders)
+    }
+
+    private fun getTotalOrderAmountBeforeDiscount(totalOrderAmountBeforeDiscount: Int) {
+        outputView.printTotalOrderAmountBeforeDiscount(totalOrderAmountBeforeDiscount)
+    }
+
+    private fun calculateTotalOrderAmountBeforeDiscount(orders: List<Order>): Int {
+        return orders.sumOf { order -> order.calculateOrderAmount(order) }
     }
 }

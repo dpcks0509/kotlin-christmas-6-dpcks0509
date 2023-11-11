@@ -44,7 +44,7 @@ object Validator {
     }
 
     private fun validateOrderFoodNameExists(foodName: String) =
-        require(Menu.values().any { it.isFoodInMenu(foodName) }) { ErrorMessage.INVALID_ORDER.getMessage() }
+        require(Menu.values().any { menu -> menu.isFoodInMenu(foodName) }) { ErrorMessage.INVALID_ORDER.getMessage() }
 
     private fun validateOrderQuantity(quantity: String): Int {
         val validQuantity = quantity.toIntOrNull()

@@ -6,8 +6,12 @@ enum class Menu(private val category: String, private val foods: List<Food>) {
     DESSERT("디저트", listOf(Food("초코케이크", 15000), Food("아이스크림", 5000))),
     BEVERAGE("음료", listOf(Food("제로콜라", 3000), Food("레드와인", 60000), Food("샴페인", 25000)));
 
-    fun findCategory(foodName: String): String? {
-        return values().find { menu -> menu.isFoodInMenu(foodName) }?.category
+    fun findCategory(foodName: String): String {
+        return values().find { menu -> menu.isFoodInMenu(foodName) }?.category!!
+    }
+
+    fun findFoodPrice(foodName: String): Int {
+        return foods.find { food -> food.getFoodName() == foodName }?.getFoodPrice()!!
     }
 
     fun isFoodInMenu(foodName: String): Boolean {
