@@ -11,5 +11,7 @@ class OutputView {
         println(OutputMessage.VISIT_DAY_INSTRUCTION.getMessage())
     }
 
-
+    fun printOrderMenusInstruction() {
+        println(OutputMessage.ORDER_MENUS_INSTRUCTION.getMessage())
+    }
 }

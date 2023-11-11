@@ -1,5 +1,6 @@
 package christmas.controller
 
+import christmas.model.Order
 import christmas.view.InputView
 import christmas.view.OutputView
 
@@ -9,6 +10,7 @@ class ChristmasController {
 
     fun run() {
         val visitDay = getInputWithValidation { getVisitDay() }
+        val orders = getInputWithValidation { getOrders() }
     }
 
     fun <T> getInputWithValidation(inputFunction: () -> T): T {
@@ -23,5 +25,10 @@ class ChristmasController {
     private fun getVisitDay(): Int {
         outputView.printVisitDayInstruction()
         return inputView.inputVisitDay()
+    }
+
+    private fun getOrders(): List<Order> {
+        outputView.printOrderMenusInstruction()
+        return inputView.inputOrders()
     }
 }
