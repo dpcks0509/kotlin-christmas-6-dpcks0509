@@ -21,6 +21,7 @@ class ChristmasController {
         val totalBenefitAmount = benefit.getTotalBenefitAmount()
         getTotalBenefitAmount(totalBenefitAmount)
         getTotalOrderAmountAfterDiscount(calculateTotalOrderAmountAfterDiscount(totalOrderAmountBeforeDiscount, totalBenefitAmount))
+        getBadge(benefit.getBadge())
     }
 
     private fun <T> getInputWithValidation(inputFunction: () -> T): T {
@@ -82,5 +83,9 @@ class ChristmasController {
 
     private fun calculateTotalOrderAmountAfterDiscount(totalOrderAmountBeforeDiscount: Int, totalBenefitAmount: Int): Int {
         return totalOrderAmountBeforeDiscount - totalBenefitAmount
+    }
+
+    private fun getBadge(badge: String) {
+        outputView.printBadge(badge)
     }
 }

@@ -12,6 +12,7 @@ import christmas.util.Constants.STAR_BADGE_BENEFIT_AMOUNT
 import christmas.util.Constants.STEP_D_DAY_DISCOUNT_AMOUNT
 import christmas.util.Constants.TREE_BADGE_BENEFIT_AMOUNT
 import christmas.util.Constants.WEEK_DISCOUNT_AMOUNT
+import christmas.util.OutputMessage
 
 class Benefit(private val visitDay: Int, private val orders: List<Order>) {
     private val weekendDays = listOf(1, 2, 8, 9, 15, 16, 22, 23, 29, 30)
@@ -26,8 +27,8 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
     private var specialDayDiscount = 0
     private var giftBenefit = 0
 
-    private var gift = "없음"
-    private var badge = "없음"
+    private var gift = OutputMessage.NO_BENEFIT.getMessage()
+    private var badge = OutputMessage.NO_BENEFIT.getMessage()
 
     init {
         totalOrderAmount = initializeTotalOrderAmount()
@@ -36,8 +37,8 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
             if (totalOrderAmount >= MINIMUM_GIFT_AMOUNT) {
                 initializeGift()
             }
-            initializeBadge()
             initializeTotalBenefitAmount()
+            initializeBadge()
         }
     }
 
@@ -62,16 +63,16 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
     }
 
     private fun initializeGift() {
-        gift = "샴페인 1개"
+        gift = OutputMessage.GIFT_CHAMPAGNE.getMessage()
         giftBenefit = GIFT_AMOUNT
     }
 
     private fun initializeBadge() {
         badge = when {
-            totalBenefitAmount >= SANTA_BADGE_BENEFIT_AMOUNT -> "산타"
-            totalBenefitAmount >= TREE_BADGE_BENEFIT_AMOUNT -> "트리"
-            totalBenefitAmount >= STAR_BADGE_BENEFIT_AMOUNT -> "별"
-            else -> "없음"
+            totalBenefitAmount >= SANTA_BADGE_BENEFIT_AMOUNT -> OutputMessage.SANTA.getMessage()
+            totalBenefitAmount >= TREE_BADGE_BENEFIT_AMOUNT -> OutputMessage.TREE.getMessage()
+            totalBenefitAmount >= STAR_BADGE_BENEFIT_AMOUNT -> OutputMessage.STAR.getMessage()
+            else -> OutputMessage.NO_BENEFIT.getMessage()
         }
     }
 
@@ -87,7 +88,7 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
         var numberOfMain = 0
         orders.forEach { order ->
             val menu = Menu.values().find { menu -> menu.isFoodInMenu(order.getOrderFoodName()) }
-            if (menu?.findCategory(order.getOrderFoodName()) == "메인") {
+            if (menu?.findCategory(order.getOrderFoodName()) == OutputMessage.MAIN.getMessage()) {
                 numberOfMain += order.getOrderQuantity()
             }
         }
@@ -102,7 +103,7 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
         var numberOfDessert = 0
         orders.forEach { order ->
             val menu = Menu.values().find { menu -> menu.isFoodInMenu(order.getOrderFoodName()) }
-            if (menu?.findCategory(order.getOrderFoodName()) == "디저트") {
+            if (menu?.findCategory(order.getOrderFoodName()) == OutputMessage.DESSERT.getMessage()) {
                 numberOfDessert += order.getOrderQuantity()
             }
         }

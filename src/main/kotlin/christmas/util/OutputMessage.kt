@@ -13,10 +13,19 @@ enum class OutputMessage(private val message: String) {
     WEEKEND_DAY_DISCOUNT("주말 할인: -%s원"),
     WEEK_DAY_DISCOUNT("평일 할인: -%s원"),
     SPECIAL_DAY_DISCOUNT("특별 할인: -%s원"),
+    GIFT_CHAMPAGNE("샴페인 1개"),
     GIFT_BENEFIT("증정 이벤트: -%s원"),
     NO_BENEFIT("없음"),
     TOTAL_BENEFIT_AMOUNT_HEADER("\n<총혜택 금액>"),
-    TOTAL_ORDER_AMOUNT_AFTER_DISCOUNT_HEADER("\n<할인 후 예상 결제 금액>");
+    TOTAL_ORDER_AMOUNT_AFTER_DISCOUNT_HEADER("\n<할인 후 예상 결제 금액>"),
+    BADGE_HEADER("\n<12월 이벤트 배지>"),
+    SANTA("산타"),
+    TREE("트리"),
+    STAR("별"),
+    APPETIZER("애피타이저"),
+    MAIN("메인"),
+    DESSERT("디저트"),
+    BEVERAGE("음료");
 
     fun getMessage(): String = message
 }

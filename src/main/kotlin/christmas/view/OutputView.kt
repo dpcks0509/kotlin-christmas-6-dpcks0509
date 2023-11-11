@@ -82,4 +82,9 @@ class OutputView {
         println(OutputMessage.TOTAL_ORDER_AMOUNT_AFTER_DISCOUNT_HEADER.getMessage())
         println("${decimalFormat.format(totalOrderAmountAfterDiscount)}원")
     }
+
+    fun printBadge(badge: String) {
+        println(OutputMessage.BADGE_HEADER.getMessage())
+        println(badge)
+    }
 }
