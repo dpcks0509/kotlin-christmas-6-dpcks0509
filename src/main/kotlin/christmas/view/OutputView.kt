@@ -73,4 +73,12 @@ class OutputView {
     fun printNoBenefit() {
         println(OutputMessage.NO_BENEFIT.getMessage())
     }
+
+    fun printTotalBenefitAmountHeader() {
+        println(OutputMessage.TOTAL_BENEFIT_AMOUNT_HEADER.getMessage())
+    }
+
+    fun printTotalBenefitAmount(totalBenefitAmount: Int) {
+        println("-${decimalFormat.format(totalBenefitAmount)}원")
+    }
 }

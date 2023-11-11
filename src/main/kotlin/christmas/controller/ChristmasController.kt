@@ -13,11 +13,11 @@ class ChristmasController {
         val visitDay = getInputWithValidation { getVisitDay() }
         val orders = getInputWithValidation { getOrders() }
         getBenefitPreview(visitDay, orders)
-        val totalOrderAmountBeforeDiscount = calculateTotalOrderAmountBeforeDiscount(orders)
-        getTotalOrderAmountBeforeDiscount(totalOrderAmountBeforeDiscount)
+        getTotalOrderAmountBeforeDiscount(calculateTotalOrderAmountBeforeDiscount(orders))
         val benefit = Benefit(visitDay, orders)
         getGiftMenu(benefit.getGift())
         getBenefitDetails(benefit)
+        getTotalBenefitAmount(benefit.getTotalBenefitAmount())
     }
 
     private fun <T> getInputWithValidation(inputFunction: () -> T): T {
@@ -67,5 +67,10 @@ class ChristmasController {
         } else {
             outputView.printNoBenefit()
         }
+    }
+
+    private fun getTotalBenefitAmount(totalBenefitAmount: Int) {
+        outputView.printTotalBenefitAmountHeader()
+        outputView.printTotalBenefitAmount(totalBenefitAmount)
     }
 }

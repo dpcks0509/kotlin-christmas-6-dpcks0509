@@ -32,11 +32,12 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
     init {
         totalOrderAmount = initializeTotalOrderAmount()
         if (totalOrderAmount >= MINIMUM_BENEFIT_AMOUNT) {
-            initializeTotalBenefitAmount()
+            initializeDiscounts()
             if (totalOrderAmount >= MINIMUM_GIFT_AMOUNT) {
                 initializeGift()
             }
             initializeBadge()
+            initializeTotalBenefitAmount()
         }
     }
 
@@ -44,7 +45,7 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
         return orders.sumOf { order -> order.getOrderAmount() }
     }
 
-    private fun initializeTotalBenefitAmount() {
+    private fun initializeDiscounts() {
         if (visitDay in EVENT_START_DAY..D_DAY_EVENT_END_DAY) {
             benefitDDayDiscount(visitDay)
         }
@@ -58,7 +59,6 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
         if (specialDays.contains(visitDay)) {
             benefitSpecialDayDiscount()
         }
-        totalBenefitAmount = dDayDiscount + weekendDayDiscount + weekDayDiscount + specialDayDiscount + giftBenefit
     }
 
     private fun initializeGift() {
@@ -88,7 +88,7 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
         orders.forEach { order ->
             val menu = Menu.values().find { menu -> menu.isFoodInMenu(order.getOrderFoodName()) }
             if (menu?.findCategory(order.getOrderFoodName()) == "메인") {
-                numberOfMain += 1
+                numberOfMain += order.getOrderQuantity()
             }
         }
         return numberOfMain
@@ -103,7 +103,7 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
         orders.forEach { order ->
             val menu = Menu.values().find { menu -> menu.isFoodInMenu(order.getOrderFoodName()) }
             if (menu?.findCategory(order.getOrderFoodName()) == "디저트") {
-                numberOfDessert += 1
+                numberOfDessert += order.getOrderQuantity()
             }
         }
         return numberOfDessert
@@ -111,6 +111,10 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
 
     private fun benefitSpecialDayDiscount() {
         specialDayDiscount = SPECIAL_DAY_DISCOUNT_AMOUNT
+    }
+
+    private fun initializeTotalBenefitAmount() {
+        totalBenefitAmount = dDayDiscount + weekendDayDiscount + weekDayDiscount + specialDayDiscount + giftBenefit
     }
 
     fun getTotalBenefitAmount(): Int = totalBenefitAmount

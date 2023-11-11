@@ -14,7 +14,8 @@ enum class OutputMessage(private val message: String) {
     WEEK_DAY_DISCOUNT("평일 할인: -%s원"),
     SPECIAL_DAY_DISCOUNT("특별 할인: -%s원"),
     GIFT_BENEFIT("증정 이벤트: -%s원"),
-    NO_BENEFIT("없음");
+    NO_BENEFIT("없음"),
+    TOTAL_BENEFIT_AMOUNT_HEADER("\n<총혜택 금액>");
 
     fun getMessage(): String = message
 }
