@@ -43,14 +43,17 @@ class ChristmasController {
 
     private fun getBenefitPreview(visitDay: Int, orders: List<Order>) {
         outputView.printBenefitPreviewHeader(visitDay)
+        outputView.printOrdersHeader()
         outputView.printOrders(orders)
     }
 
     private fun getTotalOrderAmountBeforeDiscount(totalOrderAmountBeforeDiscount: Int) {
+        outputView.printTotalOrderAmountBeforeDiscountHeader()
         outputView.printTotalOrderAmountBeforeDiscount(totalOrderAmountBeforeDiscount)
     }
 
     private fun getGiftMenu(gift: String) {
+        outputView.printGiftMenuHeader()
         outputView.printGiftMenu(gift)
     }
 
@@ -68,14 +71,17 @@ class ChristmasController {
     }
 
     private fun getTotalBenefitAmount(totalBenefitAmount: Int) {
+        outputView.printTotalBenefitAmountHeader()
         outputView.printTotalBenefitAmount(totalBenefitAmount)
     }
 
     private fun getTotalOrderAmountAfterDiscount(totalOrderAmountAfterDiscount: Int) {
+        outputView.printTotalOrderAmountAfterDiscountHeader()
         outputView.printTotalOrderAmountAfterDiscount(totalOrderAmountAfterDiscount)
     }
 
     private fun getBadge(badge: String) {
+        outputView.printBadgeHeader()
         outputView.printBadge(badge)
     }
 }

@@ -25,18 +25,27 @@ class OutputView {
         println(OutputMessage.BENEFIT_PREVIEW_HEADER.getMessage().format(visitDay))
     }
 
-    fun printOrders(orders: List<Order>) {
+    fun printOrdersHeader() {
         println(OutputMessage.ORDERS_HEADER.getMessage())
+    }
+
+    fun printOrders(orders: List<Order>) {
         orders.forEach { order -> println(order) }
     }
 
-    fun printTotalOrderAmountBeforeDiscount(totalOrderAmountBeforeDiscount: Int) {
+    fun printTotalOrderAmountBeforeDiscountHeader() {
         println(OutputMessage.TOTAL_ORDER_AMOUNT_BEFORE_DISCOUNT_HEADER.getMessage())
+    }
+
+    fun printTotalOrderAmountBeforeDiscount(totalOrderAmountBeforeDiscount: Int) {
         println("${decimalFormat.format(totalOrderAmountBeforeDiscount)}원")
     }
 
-    fun printGiftMenu(gift: String) {
+    fun printGiftMenuHeader() {
         println(OutputMessage.GIFT_MENU_HEADER.getMessage())
+    }
+
+    fun printGiftMenu(gift: String) {
         println(gift)
     }
 
@@ -73,23 +82,31 @@ class OutputView {
         println(OutputMessage.NO_BENEFIT.getMessage())
     }
 
-    fun printTotalBenefitAmount(totalBenefitAmount: Int) {
+    fun printTotalBenefitAmountHeader() {
         println(OutputMessage.TOTAL_BENEFIT_AMOUNT_HEADER.getMessage())
-        if(totalBenefitAmount != 0) {
+    }
+
+    fun printTotalBenefitAmount(totalBenefitAmount: Int) {
+        if (totalBenefitAmount != 0) {
             println(OutputMessage.NEGATIVE_AMOUNT.getMessage().format(decimalFormat.format(totalBenefitAmount)))
         } else {
             println(OutputMessage.POSITIVE_AMOUNT.getMessage().format(decimalFormat.format(totalBenefitAmount)))
         }
+    }
 
+    fun printTotalOrderAmountAfterDiscountHeader() {
+        println(OutputMessage.TOTAL_ORDER_AMOUNT_AFTER_DISCOUNT_HEADER.getMessage())
     }
 
     fun printTotalOrderAmountAfterDiscount(totalOrderAmountAfterDiscount: Int) {
-        println(OutputMessage.TOTAL_ORDER_AMOUNT_AFTER_DISCOUNT_HEADER.getMessage())
         println("${decimalFormat.format(totalOrderAmountAfterDiscount)}원")
     }
 
-    fun printBadge(badge: String) {
+    fun printBadgeHeader() {
         println(OutputMessage.BADGE_HEADER.getMessage())
+    }
+
+    fun printBadge(badge: String) {
         println(badge)
     }
 }
