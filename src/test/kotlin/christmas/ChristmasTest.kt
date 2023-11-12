@@ -55,4 +55,10 @@ class ChristmasTest {
     fun `음료만 주문한 경우`(input: String) {
         assertThrows<IllegalArgumentException> { validateOrders(input) }
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["티본스테이크-21","시저샐러드-4, 티본스테이크-5, 크리스마스파스타-6, 제로콜라-7"])
+    fun `한 번에 20개 초과 매뉴룰 주문한 경우`(input: String) {
+        assertThrows<IllegalArgumentException> { validateOrders(input) }
+    }
 }
