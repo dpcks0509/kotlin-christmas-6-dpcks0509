@@ -21,6 +21,12 @@ class ChristmasTest {
     }
 
     @ParameterizedTest
+    @ValueSource(strings = ["타파스-1,제로콜라-1", "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1"])
+    fun `올바른 주문 메뉴, 개수 입력`(input: String) {
+        assertDoesNotThrow { validateVisitDay(input) }
+    }
+
+    @ParameterizedTest
     @ValueSource(strings = ["옥수수수프-1", "함박스테이크-2", "딸기케이크-3"])
     fun `고객이 메뉴판에 없는 메뉴를 입력하는 경우`(input: String) {
         assertThrows<IllegalArgumentException> { validateOrders(input) }
