@@ -1,15 +1,18 @@
 package christmas.model
 
-import christmas.util.Constants.BASIC_D_DAY_DISCOUNT_AMOUNT
-import christmas.util.Constants.D_DAY_EVENT_END_DAY
-import christmas.util.Constants.EVENT_START_DAY
-import christmas.util.Constants.GIFT_AMOUNT
-import christmas.util.Constants.MINIMUM_BENEFIT_AMOUNT
-import christmas.util.Constants.MINIMUM_GIFT_AMOUNT
-import christmas.util.Constants.SPECIAL_DAY_DISCOUNT_AMOUNT
-import christmas.util.Constants.STEP_D_DAY_DISCOUNT_AMOUNT
-import christmas.util.Constants.WEEK_DISCOUNT_AMOUNT
-import christmas.util.OutputMessage
+import christmas.util.NumericConstants.BASIC_D_DAY_DISCOUNT_AMOUNT
+import christmas.util.NumericConstants.D_DAY_EVENT_END_DAY
+import christmas.util.NumericConstants.EVENT_START_DAY
+import christmas.util.NumericConstants.GIFT_AMOUNT
+import christmas.util.NumericConstants.MINIMUM_BENEFIT_AMOUNT
+import christmas.util.NumericConstants.MINIMUM_GIFT_AMOUNT
+import christmas.util.NumericConstants.SPECIAL_DAY_DISCOUNT_AMOUNT
+import christmas.util.NumericConstants.STEP_D_DAY_DISCOUNT_AMOUNT
+import christmas.util.NumericConstants.WEEK_DISCOUNT_AMOUNT
+import christmas.util.StringConstants.DESSERT
+import christmas.util.StringConstants.GIFT_CHAMPAGNE
+import christmas.util.StringConstants.MAIN
+import christmas.util.StringConstants.NO_BENEFIT
 
 class Benefit(private val visitDay: Int, private val orders: List<Order>) {
     private val weekendDays = listOf(1, 2, 8, 9, 15, 16, 22, 23, 29, 30)
@@ -24,7 +27,7 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
     private var weekDayDiscount = 0
     private var specialDayDiscount = 0
 
-    private var gift = OutputMessage.NO_BENEFIT.getMessage()
+    private var gift = NO_BENEFIT
     private var giftBenefit = 0
 
     private var badge = Badge.NO_BADGE
@@ -68,7 +71,7 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
     }
 
     private fun initializeGift(): String {
-        return OutputMessage.GIFT_CHAMPAGNE.getMessage()
+        return GIFT_CHAMPAGNE
     }
 
     private fun initializeGiftBenefit(): Int {
@@ -91,7 +94,7 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
         var numberOfMain = 0
         orders.forEach { order ->
             val menu = Menu.values().find { menu -> menu.isFoodInMenu(order.getOrderFoodName()) }
-            if (menu?.findCategory(order.getOrderFoodName()) == OutputMessage.MAIN.getMessage()) {
+            if (menu?.findCategory(order.getOrderFoodName()) == MAIN) {
                 numberOfMain += order.getOrderQuantity()
             }
         }
@@ -106,7 +109,7 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
         var numberOfDessert = 0
         orders.forEach { order ->
             val menu = Menu.values().find { menu -> menu.isFoodInMenu(order.getOrderFoodName()) }
-            if (menu?.findCategory(order.getOrderFoodName()) == OutputMessage.DESSERT.getMessage()) {
+            if (menu?.findCategory(order.getOrderFoodName()) == DESSERT) {
                 numberOfDessert += order.getOrderQuantity()
             }
         }

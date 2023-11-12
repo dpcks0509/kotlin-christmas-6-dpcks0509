@@ -2,6 +2,7 @@ package christmas.view
 
 import christmas.model.Order
 import christmas.util.OutputMessage
+import christmas.util.StringConstants.NO_BENEFIT
 import java.text.DecimalFormat
 
 class OutputView {
@@ -38,7 +39,7 @@ class OutputView {
     }
 
     fun printTotalOrderAmountBeforeDiscount(totalOrderAmountBeforeDiscount: Int) {
-        println("${decimalFormat.format(totalOrderAmountBeforeDiscount)}원")
+        println(OutputMessage.POSITIVE_AMOUNT.getMessage().format(decimalFormat.format(totalOrderAmountBeforeDiscount)))
     }
 
     fun printGiftMenuHeader() {
@@ -79,7 +80,7 @@ class OutputView {
     }
 
     fun printNoBenefit() {
-        println(OutputMessage.NO_BENEFIT.getMessage())
+        println(NO_BENEFIT)
     }
 
     fun printTotalBenefitAmountHeader() {
@@ -99,7 +100,7 @@ class OutputView {
     }
 
     fun printTotalOrderAmountAfterDiscount(totalOrderAmountAfterDiscount: Int) {
-        println("${decimalFormat.format(totalOrderAmountAfterDiscount)}원")
+        println(OutputMessage.POSITIVE_AMOUNT.getMessage().format(decimalFormat.format(totalOrderAmountAfterDiscount)))
     }
 
     fun printBadgeHeader() {

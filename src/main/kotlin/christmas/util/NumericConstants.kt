@@ -1,6 +1,6 @@
 package christmas.util
 
-object Constants {
+object NumericConstants {
     const val EVENT_START_DAY = 1
     const val EVENT_END_DAY = 31
     const val D_DAY_EVENT_END_DAY = 25

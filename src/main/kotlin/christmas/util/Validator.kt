@@ -2,8 +2,8 @@ package christmas.util
 
 import christmas.model.Menu
 import christmas.model.Order
-import christmas.util.Constants.EVENT_END_DAY
-import christmas.util.Constants.EVENT_START_DAY
+import christmas.util.NumericConstants.EVENT_END_DAY
+import christmas.util.NumericConstants.EVENT_START_DAY
 
 object Validator {
     fun validateVisitDay(visitDay: String): Int {
