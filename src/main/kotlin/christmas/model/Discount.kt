@@ -1,7 +1,13 @@
 package christmas.model
 
-import christmas.util.NumericConstants
-import christmas.util.StringConstants
+import christmas.util.NumericConstants.BASIC_D_DAY_DISCOUNT_AMOUNT
+import christmas.util.NumericConstants.D_DAY_EVENT_END_DAY
+import christmas.util.NumericConstants.EVENT_START_DAY
+import christmas.util.NumericConstants.SPECIAL_DAY_DISCOUNT_AMOUNT
+import christmas.util.NumericConstants.STEP_D_DAY_DISCOUNT_AMOUNT
+import christmas.util.NumericConstants.WEEK_DISCOUNT_AMOUNT
+import christmas.util.StringConstants.DESSERT_CATEGORY
+import christmas.util.StringConstants.MAIN_CATEGORY
 
 class Discount(private val visitDay: Int, private val orders: List<Order>) {
     private val weekendDays = listOf(1, 2, 8, 9, 15, 16, 22, 23, 29, 30)
@@ -13,7 +19,7 @@ class Discount(private val visitDay: Int, private val orders: List<Order>) {
     private var specialDayDiscount = 0
 
     fun initializeDiscounts() {
-        if (visitDay in NumericConstants.EVENT_START_DAY..NumericConstants.D_DAY_EVENT_END_DAY) {
+        if (visitDay in EVENT_START_DAY..D_DAY_EVENT_END_DAY) {
             dDayDiscount = benefitDDayDiscount(visitDay)
         }
         if (weekendDays.contains(visitDay)) {
@@ -28,42 +34,42 @@ class Discount(private val visitDay: Int, private val orders: List<Order>) {
         }
     }
 
+    private fun benefitDDayDiscount(visitDay: Int): Int {
+        return BASIC_D_DAY_DISCOUNT_AMOUNT + (visitDay - 1) * STEP_D_DAY_DISCOUNT_AMOUNT
+    }
+
     private fun getNumberOfMain(): Int {
         var numberOfMain = 0
         orders.forEach { order ->
             val menu = Menu.values().find { menu -> menu.isFoodInMenu(order.getOrderFoodName()) }
-            if (menu?.findCategory(order.getOrderFoodName()) == StringConstants.MAIN_CATEGORY) {
+            if (menu?.findCategory(order.getOrderFoodName()) == MAIN_CATEGORY) {
                 numberOfMain += order.getOrderQuantity()
             }
         }
         return numberOfMain
     }
 
-    private fun benefitWeekDayDiscount(numberOfDessert: Int): Int {
-        return numberOfDessert * NumericConstants.WEEK_DISCOUNT_AMOUNT
+    private fun benefitWeekendDayDiscount(numberOfMain: Int): Int {
+        return numberOfMain * WEEK_DISCOUNT_AMOUNT
     }
 
     private fun getNumberOfDessert(): Int {
         var numberOfDessert = 0
         orders.forEach { order ->
             val menu = Menu.values().find { menu -> menu.isFoodInMenu(order.getOrderFoodName()) }
-            if (menu?.findCategory(order.getOrderFoodName()) == StringConstants.DESSERT_CATEGORY) {
+            if (menu?.findCategory(order.getOrderFoodName()) == DESSERT_CATEGORY) {
                 numberOfDessert += order.getOrderQuantity()
             }
         }
         return numberOfDessert
     }
 
+    private fun benefitWeekDayDiscount(numberOfDessert: Int): Int {
+        return numberOfDessert * WEEK_DISCOUNT_AMOUNT
+    }
+
     private fun benefitSpecialDayDiscount(): Int {
-        return NumericConstants.SPECIAL_DAY_DISCOUNT_AMOUNT
-    }
-
-    private fun benefitDDayDiscount(visitDay: Int): Int {
-        return NumericConstants.BASIC_D_DAY_DISCOUNT_AMOUNT + (visitDay - 1) * NumericConstants.STEP_D_DAY_DISCOUNT_AMOUNT
-    }
-
-    private fun benefitWeekendDayDiscount(numberOfMain: Int): Int {
-        return numberOfMain * NumericConstants.WEEK_DISCOUNT_AMOUNT
+        return SPECIAL_DAY_DISCOUNT_AMOUNT
     }
 
     fun getDDayDiscount(): Int = dDayDiscount

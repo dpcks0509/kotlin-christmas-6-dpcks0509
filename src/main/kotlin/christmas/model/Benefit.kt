@@ -31,8 +31,12 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
         return orders.sumOf { order -> order.getOrderAmount() }
     }
 
-    private fun initializeTotalOrderAmountAfterDiscount(): Int {
-        return totalOrderAmountBeforeDiscount - totalBenefitAmount + gift.getBenefitAmount()
+    private fun initializeDiscounts() {
+        discount.initializeDiscounts()
+    }
+
+    private fun initializeGift(): Gift {
+        return gift.initializeGift()
     }
 
     private fun initializeTotalBenefitAmount(): Int {
@@ -40,12 +44,8 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
                 discount.getSpecialDayDiscount() + gift.getBenefitAmount()
     }
 
-    private fun initializeDiscounts() {
-        discount.initializeDiscounts()
-    }
-
-    private fun initializeGift(): Gift {
-        return gift.initializeGift()
+    private fun initializeTotalOrderAmountAfterDiscount(): Int {
+        return totalOrderAmountBeforeDiscount - totalBenefitAmount + gift.getBenefitAmount()
     }
 
     private fun initializeBadge(totalBenefitAmount: Int): Badge {
