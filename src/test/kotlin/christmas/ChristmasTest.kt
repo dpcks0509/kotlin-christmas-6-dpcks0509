@@ -233,4 +233,14 @@ class ChristmasTest {
 
         assertThat(expectBenefitAmount).isNotEqualTo(actualBenefitAmount)
     }
+
+    @Test
+    fun `할인 전 총주문 금액 계산`() {
+        val benefit = Benefit(25, listOf(Order("아이스크림", 2)))
+        val expectTotalOrderAmountBeforeDiscount = 10000
+
+        val actualTotalOrderAmountBeforeDiscount = benefit.getTotalOrderAmountBeforeDiscount()
+
+        assertThat(expectTotalOrderAmountBeforeDiscount).isEqualTo(actualTotalOrderAmountBeforeDiscount)
+    }
 }
