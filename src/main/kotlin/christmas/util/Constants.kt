@@ -14,4 +14,5 @@ object Constants {
     const val SANTA_BADGE_BENEFIT_AMOUNT = 20000
     const val TREE_BADGE_BENEFIT_AMOUNT = 10000
     const val STAR_BADGE_BENEFIT_AMOUNT = 5000
+    const val NO_BENEFIT_AMOUNT = 0
 }

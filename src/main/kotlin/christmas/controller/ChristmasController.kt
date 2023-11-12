@@ -19,7 +19,7 @@ class ChristmasController {
         getBenefitDetails(benefit)
         getTotalBenefitAmount(benefit.getTotalBenefitAmount())
         getTotalOrderAmountAfterDiscount(benefit.getTotalOrderAmountAfterDiscount())
-        getBadge(benefit.getBadge())
+        getBadge(benefit.getBadge().getRank())
     }
 
     private fun <T> getInputWithValidation(inputFunction: () -> T): T {

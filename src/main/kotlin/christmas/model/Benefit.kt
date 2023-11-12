@@ -6,11 +6,8 @@ import christmas.util.Constants.EVENT_START_DAY
 import christmas.util.Constants.GIFT_AMOUNT
 import christmas.util.Constants.MINIMUM_BENEFIT_AMOUNT
 import christmas.util.Constants.MINIMUM_GIFT_AMOUNT
-import christmas.util.Constants.SANTA_BADGE_BENEFIT_AMOUNT
 import christmas.util.Constants.SPECIAL_DAY_DISCOUNT_AMOUNT
-import christmas.util.Constants.STAR_BADGE_BENEFIT_AMOUNT
 import christmas.util.Constants.STEP_D_DAY_DISCOUNT_AMOUNT
-import christmas.util.Constants.TREE_BADGE_BENEFIT_AMOUNT
 import christmas.util.Constants.WEEK_DISCOUNT_AMOUNT
 import christmas.util.OutputMessage
 
@@ -26,10 +23,11 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
     private var weekendDayDiscount = 0
     private var weekDayDiscount = 0
     private var specialDayDiscount = 0
-    private var giftBenefit = 0
 
     private var gift = OutputMessage.NO_BENEFIT.getMessage()
-    private var badge = OutputMessage.NO_BENEFIT.getMessage()
+    private var giftBenefit = 0
+
+    private var badge = Badge.NO_BADGE
 
     init {
         totalOrderAmountBeforeDiscount = initializeTotalOrderAmountBeforeDiscount()
@@ -41,7 +39,7 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
             }
             totalBenefitAmount = initializeTotalBenefitAmount()
             totalOrderAmountAfterDiscount = initializeTotalOrderAmountAfterDiscount()
-            badge = initializeBadge()
+            badge = initializeBadge(totalBenefitAmount)
         }
     }
 
@@ -77,13 +75,8 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
         return GIFT_AMOUNT
     }
 
-    private fun initializeBadge(): String {
-        return when {
-            totalBenefitAmount >= SANTA_BADGE_BENEFIT_AMOUNT -> OutputMessage.SANTA.getMessage()
-            totalBenefitAmount >= TREE_BADGE_BENEFIT_AMOUNT -> OutputMessage.TREE.getMessage()
-            totalBenefitAmount >= STAR_BADGE_BENEFIT_AMOUNT -> OutputMessage.STAR.getMessage()
-            else -> OutputMessage.NO_BENEFIT.getMessage()
-        }
+    private fun initializeBadge(totalBenefitAmount: Int): Badge {
+        return badge.initializeBadge(totalBenefitAmount)
     }
 
     private fun benefitDDayDiscount(visitDay: Int): Int {
@@ -146,5 +139,5 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
 
     fun getGift(): String = gift
 
-    fun getBadge(): String = badge
+    fun getBadge(): Badge = badge
 }
