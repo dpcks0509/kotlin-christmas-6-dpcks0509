@@ -32,7 +32,7 @@ class Discount(private val visitDay: Int, private val orders: List<Order>) {
         var numberOfMain = 0
         orders.forEach { order ->
             val menu = Menu.values().find { menu -> menu.isFoodInMenu(order.getOrderFoodName()) }
-            if (menu?.findCategory(order.getOrderFoodName()) == StringConstants.MAIN) {
+            if (menu?.findCategory(order.getOrderFoodName()) == StringConstants.MAIN_CATEGORY) {
                 numberOfMain += order.getOrderQuantity()
             }
         }
@@ -47,7 +47,7 @@ class Discount(private val visitDay: Int, private val orders: List<Order>) {
         var numberOfDessert = 0
         orders.forEach { order ->
             val menu = Menu.values().find { menu -> menu.isFoodInMenu(order.getOrderFoodName()) }
-            if (menu?.findCategory(order.getOrderFoodName()) == StringConstants.DESSERT) {
+            if (menu?.findCategory(order.getOrderFoodName()) == StringConstants.DESSERT_CATEGORY) {
                 numberOfDessert += order.getOrderQuantity()
             }
         }
