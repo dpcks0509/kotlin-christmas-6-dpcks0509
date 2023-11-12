@@ -79,12 +79,34 @@ class ChristmasTest {
 
     @Test
     fun `크리스마스 디데이 할인 기간아닌 경우`() {
-        val discount = Discount(32, listOf(Order("타파스", 1)))
+        val discount = Discount(26, listOf(Order("타파스", 1)))
         val expectDDayDiscount = 3500
 
         discount.initializeDiscounts()
         val actualDDayDiscount = discount.getDDayDiscount()
 
         assertThat(expectDDayDiscount).isNotEqualTo(actualDDayDiscount)
+    }
+
+    @Test
+    fun `평일 할인 디저트 메뉴일 경우`() {
+        val discount = Discount(11, listOf(Order("초코케이크", 2)))
+        val expectWeekDayDiscount = 4046
+
+        discount.initializeDiscounts()
+        val actualWeekDayDiscount = discount.getWeekDayDiscount()
+
+        assertThat(expectWeekDayDiscount).isEqualTo(actualWeekDayDiscount)
+    }
+
+    @Test
+    fun `평일 할인 디저트 메뉴아닐 경우`() {
+        val discount = Discount(11, listOf(Order("티본스테이크", 2)))
+        val expectWeekDayDiscount = 4046
+
+        discount.initializeDiscounts()
+        val actualWeekDayDiscount = discount.getWeekDayDiscount()
+
+        assertThat(expectWeekDayDiscount).isEqualTo(actualWeekDayDiscount)
     }
 }
