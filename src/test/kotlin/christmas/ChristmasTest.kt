@@ -27,7 +27,7 @@ class ChristmasTest {
     @ParameterizedTest
     @ValueSource(strings = ["타파스-1,제로콜라-1", "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1"])
     fun `올바른 주문 메뉴, 개수 입력`(input: String) {
-        assertDoesNotThrow { validateVisitDay(input) }
+        assertDoesNotThrow { validateOrders(input) }
     }
 
     @ParameterizedTest
@@ -107,6 +107,28 @@ class ChristmasTest {
         discount.initializeDiscounts()
         val actualWeekDayDiscount = discount.getWeekDayDiscount()
 
-        assertThat(expectWeekDayDiscount).isEqualTo(actualWeekDayDiscount)
+        assertThat(expectWeekDayDiscount).isNotEqualTo(actualWeekDayDiscount)
+    }
+
+    @Test
+    fun `주말 할인 메인 메뉴일 경우`() {
+        val discount = Discount(15, listOf(Order("티본스테이크", 2)))
+        val expectWeekendDayDiscount = 4046
+
+        discount.initializeDiscounts()
+        val actualWeekendDayDiscount = discount.getWeekendDayDiscount()
+
+        assertThat(expectWeekendDayDiscount).isEqualTo(actualWeekendDayDiscount)
+    }
+
+    @Test
+    fun `주말 할인 메인 메뉴아닐 경우`() {
+        val discount = Discount(15, listOf(Order("초코케이크", 2)))
+        val expectWeekendDayDiscount = 4046
+
+        discount.initializeDiscounts()
+        val actualWeekendDayDiscount = discount.getWeekendDayDiscount()
+
+        assertThat(expectWeekendDayDiscount).isNotEqualTo(actualWeekendDayDiscount)
     }
 }
