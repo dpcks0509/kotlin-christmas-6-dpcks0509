@@ -131,4 +131,26 @@ class ChristmasTest {
 
         assertThat(expectWeekendDayDiscount).isNotEqualTo(actualWeekendDayDiscount)
     }
+
+    @Test
+    fun `특별 할인날인 경우`() {
+        val discount = Discount(25, listOf(Order("티본스테이크", 2)))
+        val expectSpecialDayDiscount = 1000
+
+        discount.initializeDiscounts()
+        val actualSpecialDayDiscount = discount.getSpecialDayDiscount()
+
+        assertThat(expectSpecialDayDiscount).isEqualTo(actualSpecialDayDiscount)
+    }
+
+    @Test
+    fun `특별 할인날이 아닌 경우`() {
+        val discount = Discount(26, listOf(Order("티본스테이크", 2)))
+        val expectSpecialDayDiscount = 1000
+
+        discount.initializeDiscounts()
+        val actualSpecialDayDiscount = discount.getSpecialDayDiscount()
+
+        assertThat(expectSpecialDayDiscount).isNotEqualTo(actualSpecialDayDiscount)
+    }
 }
