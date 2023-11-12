@@ -15,7 +15,7 @@ class ChristmasController {
         getBenefitPreview(visitDay, orders)
         val benefit = Benefit(visitDay, orders)
         getTotalOrderAmountBeforeDiscount(benefit.getTotalOrderAmountBeforeDiscount())
-        getGiftMenu(benefit.getGift())
+        getGiftMenu(benefit.getGift().getChampagne())
         getBenefitDetails(benefit)
         getTotalBenefitAmount(benefit.getTotalBenefitAmount())
         getTotalOrderAmountAfterDiscount(benefit.getTotalOrderAmountAfterDiscount())
@@ -64,7 +64,7 @@ class ChristmasController {
             outputView.printWeekendDayDiscount(benefit.getWeekendDayDiscount())
             outputView.printWeekDayDiscount(benefit.getWeekDayDiscount())
             outputView.printSpecialDayDiscount(benefit.getSpecialDayDiscount())
-            outputView.printGiftBenefit(benefit.getGiftBenefit())
+            outputView.printGiftBenefit(benefit.getGift().getBenefitAmount())
         } else {
             outputView.printNoBenefit()
         }

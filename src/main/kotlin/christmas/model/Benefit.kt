@@ -1,14 +1,17 @@
 package christmas.model
 
+import christmas.util.NumericConstants
 import christmas.util.NumericConstants.BASIC_D_DAY_DISCOUNT_AMOUNT
 import christmas.util.NumericConstants.D_DAY_EVENT_END_DAY
 import christmas.util.NumericConstants.EVENT_START_DAY
 import christmas.util.NumericConstants.GIFT_AMOUNT
 import christmas.util.NumericConstants.MINIMUM_BENEFIT_AMOUNT
 import christmas.util.NumericConstants.MINIMUM_GIFT_AMOUNT
+import christmas.util.NumericConstants.NO_BENEFIT_AMOUNT
 import christmas.util.NumericConstants.SPECIAL_DAY_DISCOUNT_AMOUNT
 import christmas.util.NumericConstants.STEP_D_DAY_DISCOUNT_AMOUNT
 import christmas.util.NumericConstants.WEEK_DISCOUNT_AMOUNT
+import christmas.util.StringConstants
 import christmas.util.StringConstants.DESSERT
 import christmas.util.StringConstants.GIFT_CHAMPAGNE
 import christmas.util.StringConstants.MAIN
@@ -27,8 +30,7 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
     private var weekDayDiscount = 0
     private var specialDayDiscount = 0
 
-    private var gift = NO_BENEFIT
-    private var giftBenefit = 0
+    private var gift = Gift(NO_BENEFIT, NO_BENEFIT_AMOUNT)
 
     private var badge = Badge.NO_BADGE
 
@@ -38,7 +40,6 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
             initializeDiscounts()
             if (totalOrderAmountBeforeDiscount >= MINIMUM_GIFT_AMOUNT) {
                 gift = initializeGift()
-                giftBenefit = initializeGiftBenefit()
             }
             totalBenefitAmount = initializeTotalBenefitAmount()
             totalOrderAmountAfterDiscount = initializeTotalOrderAmountAfterDiscount()
@@ -51,7 +52,7 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
     }
 
     private fun initializeTotalOrderAmountAfterDiscount(): Int {
-        return totalOrderAmountBeforeDiscount - totalBenefitAmount + giftBenefit
+        return totalOrderAmountBeforeDiscount - totalBenefitAmount + gift.getBenefitAmount()
     }
 
     private fun initializeDiscounts() {
@@ -70,12 +71,8 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
         }
     }
 
-    private fun initializeGift(): String {
-        return GIFT_CHAMPAGNE
-    }
-
-    private fun initializeGiftBenefit(): Int {
-        return GIFT_AMOUNT
+    private fun initializeGift(): Gift {
+        return gift.initializeGift()
     }
 
     private fun initializeBadge(totalBenefitAmount: Int): Badge {
@@ -121,7 +118,7 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
     }
 
     private fun initializeTotalBenefitAmount(): Int {
-        return dDayDiscount + weekendDayDiscount + weekDayDiscount + specialDayDiscount + giftBenefit
+        return dDayDiscount + weekendDayDiscount + weekDayDiscount + specialDayDiscount + gift.getBenefitAmount()
     }
 
     fun getTotalOrderAmountBeforeDiscount(): Int = totalOrderAmountBeforeDiscount
@@ -138,9 +135,7 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
 
     fun getSpecialDayDiscount(): Int = specialDayDiscount
 
-    fun getGiftBenefit(): Int = giftBenefit
-
-    fun getGift(): String = gift
+    fun getGift(): Gift = gift
 
     fun getBadge(): Badge = badge
 }
