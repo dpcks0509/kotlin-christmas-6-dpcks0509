@@ -1,7 +1,11 @@
 package christmas
 
+import christmas.model.Discount
+import christmas.model.Order
 import christmas.util.Validator.validateOrders
 import christmas.util.Validator.validateVisitDay
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -57,8 +61,30 @@ class ChristmasTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["티본스테이크-21","시저샐러드-4, 티본스테이크-5, 크리스마스파스타-6, 제로콜라-7"])
+    @ValueSource(strings = ["티본스테이크-21", "시저샐러드-4, 티본스테이크-5, 크리스마스파스타-6, 제로콜라-7"])
     fun `한 번에 20개 초과 매뉴룰 주문한 경우`(input: String) {
         assertThrows<IllegalArgumentException> { validateOrders(input) }
+    }
+
+    @Test
+    fun `크리스마스 디데이 할인 기간인 경우`() {
+        val discount = Discount(25, listOf(Order("타파스", 1)))
+        val expectDDayDiscount = 3400
+
+        discount.initializeDiscounts()
+        val actualDDayDiscount = discount.getDDayDiscount()
+
+        assertThat(expectDDayDiscount).isEqualTo(actualDDayDiscount)
+    }
+
+    @Test
+    fun `크리스마스 디데이 할인 기간아닌 경우`() {
+        val discount = Discount(32, listOf(Order("타파스", 1)))
+        val expectDDayDiscount = 3500
+
+        discount.initializeDiscounts()
+        val actualDDayDiscount = discount.getDDayDiscount()
+
+        assertThat(expectDDayDiscount).isNotEqualTo(actualDDayDiscount)
     }
 }
