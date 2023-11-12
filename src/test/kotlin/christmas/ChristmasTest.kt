@@ -1,11 +1,15 @@
 package christmas
 
+import christmas.model.Badge
 import christmas.model.Discount
 import christmas.model.Gift
 import christmas.model.Order
 import christmas.util.NumericConstants.NO_BENEFIT_AMOUNT
 import christmas.util.StringConstants.GIFT_CHAMPAGNE
 import christmas.util.StringConstants.NO_BENEFIT
+import christmas.util.StringConstants.SANTA
+import christmas.util.StringConstants.STAR
+import christmas.util.StringConstants.TREE
 import christmas.util.Validator.validateOrders
 import christmas.util.Validator.validateVisitDay
 import org.assertj.core.api.Assertions.assertThat
@@ -178,5 +182,38 @@ class ChristmasTest {
         val actualChampagne = gift.getChampagne()
 
         assertThat(expectChampagne).isNotEqualTo(actualChampagne)
+    }
+
+    @Test
+    fun `산타 배지 부여`() {
+        var badge = Badge.NO_BADGE
+        val expectBadge = SANTA
+
+        badge = badge.initializeBadge(20000)
+        val actualBadge = badge.getRank()
+
+        assertThat(expectBadge).isEqualTo(actualBadge)
+    }
+
+    @Test
+    fun `트리 배지 부여`() {
+        var badge = Badge.NO_BADGE
+        val expectBadge = TREE
+
+        badge = badge.initializeBadge(10000)
+        val actualBadge = badge.getRank()
+
+        assertThat(expectBadge).isEqualTo(actualBadge)
+    }
+
+    @Test
+    fun `별 배지 부여`() {
+        var badge = Badge.NO_BADGE
+        val expectBadge = STAR
+
+        badge = badge.initializeBadge(5000)
+        val actualBadge = badge.getRank()
+
+        assertThat(expectBadge).isEqualTo(actualBadge)
     }
 }
