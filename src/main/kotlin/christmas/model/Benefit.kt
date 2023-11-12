@@ -19,9 +19,9 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
             initializeDiscounts()
             gift = initializeGift(totalOrderAmountBeforeDiscount)
             totalBenefitAmount = initializeTotalBenefitAmount()
-            totalOrderAmountAfterDiscount = initializeTotalOrderAmountAfterDiscount()
             badge = initializeBadge(totalBenefitAmount)
         }
+        totalOrderAmountAfterDiscount = initializeTotalOrderAmountAfterDiscount()
     }
 
     private fun initializeTotalOrderAmountBeforeDiscount(): Int {
