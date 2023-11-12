@@ -32,49 +32,53 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
     private var badge = OutputMessage.NO_BENEFIT.getMessage()
 
     init {
-        initializeTotalOrderAmountBeforeDiscount()
+        totalOrderAmountBeforeDiscount = initializeTotalOrderAmountBeforeDiscount()
         if (totalOrderAmountBeforeDiscount >= MINIMUM_BENEFIT_AMOUNT) {
             initializeDiscounts()
             if (totalOrderAmountBeforeDiscount >= MINIMUM_GIFT_AMOUNT) {
-                initializeGift()
+                gift = initializeGift()
+                giftBenefit = initializeGiftBenefit()
             }
-            initializeTotalBenefitAmount()
-            initializeTotalOrderAmountAfterDiscount()
-            initializeBadge()
+            totalBenefitAmount = initializeTotalBenefitAmount()
+            totalOrderAmountAfterDiscount = initializeTotalOrderAmountAfterDiscount()
+            badge = initializeBadge()
         }
     }
 
-    private fun initializeTotalOrderAmountBeforeDiscount() {
-        totalOrderAmountBeforeDiscount = orders.sumOf { order -> order.getOrderAmount() }
+    private fun initializeTotalOrderAmountBeforeDiscount(): Int {
+        return orders.sumOf { order -> order.getOrderAmount() }
     }
 
-    private fun initializeTotalOrderAmountAfterDiscount() {
-        totalOrderAmountAfterDiscount = totalOrderAmountBeforeDiscount - totalBenefitAmount + giftBenefit
+    private fun initializeTotalOrderAmountAfterDiscount(): Int {
+        return totalOrderAmountBeforeDiscount - totalBenefitAmount + giftBenefit
     }
 
     private fun initializeDiscounts() {
         if (visitDay in EVENT_START_DAY..D_DAY_EVENT_END_DAY) {
-            benefitDDayDiscount(visitDay)
+            dDayDiscount = benefitDDayDiscount(visitDay)
         }
         if (weekendDays.contains(visitDay)) {
             val numberOfMain = getNumberOfMain()
-            benefitWeekendDayDiscount(numberOfMain)
+            weekendDayDiscount = benefitWeekendDayDiscount(numberOfMain)
         } else {
             val numberOfDessert = getNumberOfDessert()
-            benefitWeekDayDiscount(numberOfDessert)
+            weekDayDiscount = benefitWeekDayDiscount(numberOfDessert)
         }
         if (specialDays.contains(visitDay)) {
-            benefitSpecialDayDiscount()
+            specialDayDiscount = benefitSpecialDayDiscount()
         }
     }
 
-    private fun initializeGift() {
-        gift = OutputMessage.GIFT_CHAMPAGNE.getMessage()
-        giftBenefit = GIFT_AMOUNT
+    private fun initializeGift(): String {
+        return OutputMessage.GIFT_CHAMPAGNE.getMessage()
     }
 
-    private fun initializeBadge() {
-        badge = when {
+    private fun initializeGiftBenefit(): Int {
+        return GIFT_AMOUNT
+    }
+
+    private fun initializeBadge(): String {
+        return when {
             totalBenefitAmount >= SANTA_BADGE_BENEFIT_AMOUNT -> OutputMessage.SANTA.getMessage()
             totalBenefitAmount >= TREE_BADGE_BENEFIT_AMOUNT -> OutputMessage.TREE.getMessage()
             totalBenefitAmount >= STAR_BADGE_BENEFIT_AMOUNT -> OutputMessage.STAR.getMessage()
@@ -82,12 +86,12 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
         }
     }
 
-    private fun benefitDDayDiscount(visitDay: Int) {
-        dDayDiscount = BASIC_D_DAY_DISCOUNT_AMOUNT + (visitDay - 1) * STEP_D_DAY_DISCOUNT_AMOUNT
+    private fun benefitDDayDiscount(visitDay: Int): Int {
+        return BASIC_D_DAY_DISCOUNT_AMOUNT + (visitDay - 1) * STEP_D_DAY_DISCOUNT_AMOUNT
     }
 
-    private fun benefitWeekendDayDiscount(numberOfMain: Int) {
-        weekendDayDiscount = numberOfMain * WEEK_DISCOUNT_AMOUNT
+    private fun benefitWeekendDayDiscount(numberOfMain: Int): Int {
+        return numberOfMain * WEEK_DISCOUNT_AMOUNT
     }
 
     private fun getNumberOfMain(): Int {
@@ -101,8 +105,8 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
         return numberOfMain
     }
 
-    private fun benefitWeekDayDiscount(numberOfDessert: Int) {
-        weekDayDiscount = numberOfDessert * WEEK_DISCOUNT_AMOUNT
+    private fun benefitWeekDayDiscount(numberOfDessert: Int): Int {
+        return numberOfDessert * WEEK_DISCOUNT_AMOUNT
     }
 
     private fun getNumberOfDessert(): Int {
@@ -116,12 +120,12 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
         return numberOfDessert
     }
 
-    private fun benefitSpecialDayDiscount() {
-        specialDayDiscount = SPECIAL_DAY_DISCOUNT_AMOUNT
+    private fun benefitSpecialDayDiscount(): Int {
+        return SPECIAL_DAY_DISCOUNT_AMOUNT
     }
 
-    private fun initializeTotalBenefitAmount() {
-        totalBenefitAmount = dDayDiscount + weekendDayDiscount + weekDayDiscount + specialDayDiscount + giftBenefit
+    private fun initializeTotalBenefitAmount(): Int {
+        return dDayDiscount + weekendDayDiscount + weekDayDiscount + specialDayDiscount + giftBenefit
     }
 
     fun getTotalOrderAmountBeforeDiscount(): Int = totalOrderAmountBeforeDiscount
