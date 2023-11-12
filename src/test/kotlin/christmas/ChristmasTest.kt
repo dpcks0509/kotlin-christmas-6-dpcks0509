@@ -1,9 +1,6 @@
 package christmas
 
-import christmas.model.Badge
-import christmas.model.Discount
-import christmas.model.Gift
-import christmas.model.Order
+import christmas.model.*
 import christmas.util.NumericConstants.NO_BENEFIT_AMOUNT
 import christmas.util.StringConstants.GIFT_CHAMPAGNE
 import christmas.util.StringConstants.NO_BENEFIT
@@ -215,5 +212,25 @@ class ChristmasTest {
         val actualBadge = badge.getRank()
 
         assertThat(expectBadge).isEqualTo(actualBadge)
+    }
+
+    @Test
+    fun `주문금액 10,000원 이상일경우`() {
+        val benefit = Benefit(25, listOf(Order("아이스크림", 2)))
+        val expectBenefitAmount = 8446
+
+        val actualBenefitAmount = benefit.getTotalBenefitAmount()
+
+        assertThat(expectBenefitAmount).isEqualTo(actualBenefitAmount)
+    }
+
+    @Test
+    fun `주문금액 10,000원 미만일경우`() {
+        val benefit = Benefit(25, listOf(Order("아이스크림", 1)))
+        val expectBenefitAmount = 6423
+
+        val actualBenefitAmount = benefit.getTotalBenefitAmount()
+
+        assertThat(expectBenefitAmount).isNotEqualTo(actualBenefitAmount)
     }
 }
