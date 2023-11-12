@@ -43,4 +43,10 @@ class ChristmasTest {
     fun `메뉴 형식이 예시와 다른 경우`(input: String) {
         assertThrows<IllegalArgumentException> { validateOrders(input) }
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["타파스-1,제로콜라-1,타파스-2", "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1,티본스테이크-2"])
+    fun `중복 메뉴를 입력한 경우`(input: String) {
+        assertThrows<IllegalArgumentException> { validateOrders(input) }
+    }
 }
