@@ -1,7 +1,6 @@
 package christmas.model
 
 import christmas.util.NumericConstants.MINIMUM_BENEFIT_AMOUNT
-import christmas.util.NumericConstants.MINIMUM_GIFT_AMOUNT
 import christmas.util.NumericConstants.NO_BENEFIT_AMOUNT
 import christmas.util.StringConstants.NO_BENEFIT
 
@@ -18,9 +17,7 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
         totalOrderAmountBeforeDiscount = initializeTotalOrderAmountBeforeDiscount()
         if (totalOrderAmountBeforeDiscount >= MINIMUM_BENEFIT_AMOUNT) {
             initializeDiscounts()
-            if (totalOrderAmountBeforeDiscount >= MINIMUM_GIFT_AMOUNT) {
-                gift = initializeGift()
-            }
+            gift = initializeGift(totalOrderAmountBeforeDiscount)
             totalBenefitAmount = initializeTotalBenefitAmount()
             totalOrderAmountAfterDiscount = initializeTotalOrderAmountAfterDiscount()
             badge = initializeBadge(totalBenefitAmount)
@@ -35,8 +32,8 @@ class Benefit(private val visitDay: Int, private val orders: List<Order>) {
         discount.initializeDiscounts()
     }
 
-    private fun initializeGift(): Gift {
-        return gift.initializeGift()
+    private fun initializeGift(totalOrderAmountBeforeDiscount: Int): Gift {
+        return gift.initializeGift(totalOrderAmountBeforeDiscount)
     }
 
     private fun initializeTotalBenefitAmount(): Int {
