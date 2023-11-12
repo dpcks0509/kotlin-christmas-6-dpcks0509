@@ -10,8 +10,8 @@ class ChristmasController {
     private val outputView = OutputView()
 
     fun run() {
-        val visitDay = getInputWithValidation { getVisitDay() }
-        val orders = getInputWithValidation { getOrders() }
+        val visitDay = getInputUntilValid { getVisitDay() }
+        val orders = getInputUntilValid { getOrders() }
         getBenefitPreview(visitDay, orders)
         val benefit = Benefit(visitDay, orders)
         getTotalOrderAmountBeforeDiscount(benefit.getTotalOrderAmountBeforeDiscount())
@@ -22,12 +22,12 @@ class ChristmasController {
         getBadge(benefit.getBadge().getRank())
     }
 
-    private fun <T> getInputWithValidation(inputFunction: () -> T): T {
+    private fun <T> getInputUntilValid(inputFunction: () -> T): T {
         return try {
             inputFunction()
         } catch (illegalArgumentException: IllegalArgumentException) {
             outputView.printErrorMessage(illegalArgumentException.message.toString())
-            getInputWithValidation(inputFunction)
+            getInputUntilValid(inputFunction)
         }
     }
 
@@ -60,10 +60,10 @@ class ChristmasController {
     private fun getBenefitDetails(benefit: Benefit) {
         outputView.printBenefitDetailsHeader()
         if (benefit.getTotalBenefitAmount() != 0) {
-            outputView.printDDayDiscount(benefit.getDDayDiscount())
-            outputView.printWeekendDayDiscount(benefit.getWeekendDayDiscount())
-            outputView.printWeekDayDiscount(benefit.getWeekDayDiscount())
-            outputView.printSpecialDayDiscount(benefit.getSpecialDayDiscount())
+            outputView.printDDayDiscount(benefit.getDiscount().getDDayDiscount())
+            outputView.printWeekendDayDiscount(benefit.getDiscount().getWeekendDayDiscount())
+            outputView.printWeekDayDiscount(benefit.getDiscount().getWeekDayDiscount())
+            outputView.printSpecialDayDiscount(benefit.getDiscount().getSpecialDayDiscount())
             outputView.printGiftBenefit(benefit.getGift().getBenefitAmount())
         } else {
             outputView.printNoBenefit()
