@@ -1,7 +1,11 @@
 package christmas
 
 import christmas.model.Discount
+import christmas.model.Gift
 import christmas.model.Order
+import christmas.util.NumericConstants.NO_BENEFIT_AMOUNT
+import christmas.util.StringConstants.GIFT_CHAMPAGNE
+import christmas.util.StringConstants.NO_BENEFIT
 import christmas.util.Validator.validateOrders
 import christmas.util.Validator.validateVisitDay
 import org.assertj.core.api.Assertions.assertThat
@@ -152,5 +156,27 @@ class ChristmasTest {
         val actualSpecialDayDiscount = discount.getSpecialDayDiscount()
 
         assertThat(expectSpecialDayDiscount).isNotEqualTo(actualSpecialDayDiscount)
+    }
+
+    @Test
+    fun `증정 이벤트 대상자일 경우`() {
+        var gift = Gift(NO_BENEFIT, NO_BENEFIT_AMOUNT)
+        val expectChampagne = GIFT_CHAMPAGNE
+
+        gift = gift.initializeGift(120000)
+        val actualChampagne = gift.getChampagne()
+
+        assertThat(expectChampagne).isEqualTo(actualChampagne)
+    }
+
+    @Test
+    fun `증정 이벤트 대상자이 아닐 경우`() {
+        var gift = Gift(NO_BENEFIT, NO_BENEFIT_AMOUNT)
+        val expectChampagne = GIFT_CHAMPAGNE
+
+        gift = gift.initializeGift(80000)
+        val actualChampagne = gift.getChampagne()
+
+        assertThat(expectChampagne).isNotEqualTo(actualChampagne)
     }
 }
